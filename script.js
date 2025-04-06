@@ -1,8 +1,3 @@
-// array[][]
-// 0: [[0, 1, 2]]
-// 1: [[0, 1, 2]]
-// 2: [[0, 1, 2]]
-
 function Gameboard() {
   const rows = 3;
   const columns = 3;
@@ -17,13 +12,14 @@ function Gameboard() {
 
   const getBoard = () => board;
 
-  const putPlayerValue = (row, col, playerName, playerValue) => {
-    if (board[row][col].getValue() === "") {
-      console.log(`${playerValue} is set for ${playerName}`);
+  const putPlayerValue = (row, col, playerName, playerValue, playerSymbol) => {
+    if (board[row][col].getValue() === 0) {
       board[row][col].setValue(playerValue);
+
       return "SUCCESS";
     } else {
       console.log("PLEASE CHOOSE ANOTHER ROW AND COL");
+
       return "FAIL";
     }
   };
@@ -45,7 +41,7 @@ function Gameboard() {
 }
 
 function Cell() {
-  let value = "";
+  let value = 0;
 
   const setValue = (playerValue) => {
     value = playerValue;
@@ -68,11 +64,13 @@ function GameController(
   const players = [
     {
       name: playeOneName,
-      value: "X",
+      symbol: "X",
+      value: 1,
     },
     {
       name: playerTwoName,
-      value: "O",
+      symbol: "O",
+      value: -1,
     },
   ];
 
@@ -89,10 +87,55 @@ function GameController(
 
   const printRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn`);
   };
 
+  const winnerChecker = () => {
+    for (let i = 0; i < board.getBoard().length; i++) {
+      let rowSum = 0;
+      let columnSum = 0;
+
+      for (let j = 0; j < board.getBoard()[i].length; j++) {
+        rowSum += board.getBoard()[i][j].getValue();
+        columnSum += board.getBoard()[j][i].getValue();
+      }
+
+      if (
+        rowSum === 3 ||
+        rowSum === -3 ||
+        columnSum === 3 ||
+        columnSum === -3
+      ) {
+        return "WINNER";
+      }
+    }
+
+    let diagonalSum =
+      board.getBoard()[0][0].getValue() +
+      board.getBoard()[1][1].getValue() +
+      board.getBoard()[2][2].getValue();
+
+    let reverseDiagonalSum =
+      board.getBoard()[0][2].getValue() +
+      board.getBoard()[1][1].getValue() +
+      board.getBoard()[2][0].getValue();
+
+    if (
+      diagonalSum === 3 ||
+      diagonalSum === -3 ||
+      reverseDiagonalSum === 3 ||
+      reverseDiagonalSum === -3
+    ) {
+      return "WINNER";
+    }
+
+    return;
+  };
+
+  let roundCounter = 0;
   const playRound = (row, col) => {
+    roundCounter++;
+    console.log(roundCounter);
+
     console.log(`${getActivePlayer().name}'s current round...`);
 
     if (
@@ -100,11 +143,25 @@ function GameController(
         row,
         col,
         getActivePlayer().name,
-        getActivePlayer().value
+        getActivePlayer().value,
+        getActivePlayer().symbol
       ) === "SUCCESS"
     ) {
+      if (winnerChecker() === "WINNER") {
+        console.log(`${getActivePlayer().symbol} is the winner!`);
+        printRound();
+        return;
+      }
+
+      if (roundCounter === 9) {
+        console.log("TIE");
+        printRound();
+        return;
+      }
+
       switchActivePlayer();
       printRound();
+      console.log(`${getActivePlayer().name}'s turn`);
     } else {
       console.log("TRY AGAIN " + getActivePlayer().name);
     }
