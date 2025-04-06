@@ -18,10 +18,13 @@ function Gameboard() {
   const getBoard = () => board;
 
   const putPlayerValue = (row, col, playerName, playerValue) => {
-    if (board[row][col].getValue !== "") {
+    if (board[row][col].getValue() === "") {
       console.log(`${playerValue} is set for ${playerName}`);
+      board[row][col].setValue(playerValue);
+      return "SUCCESS";
     } else {
       console.log("PLEASE CHOOSE ANOTHER ROW AND COL");
+      return "FAIL";
     }
   };
 
@@ -91,15 +94,20 @@ function GameController(
 
   const playRound = (row, col) => {
     console.log(`${getActivePlayer().name}'s current round...`);
-    board.putPlayerValue(
-      row,
-      col,
-      getActivePlayer().name,
-      getActivePlayer().value
-    );
 
-    switchActivePlayer();
-    printRound();
+    if (
+      board.putPlayerValue(
+        row,
+        col,
+        getActivePlayer().name,
+        getActivePlayer().value
+      ) === "SUCCESS"
+    ) {
+      switchActivePlayer();
+      printRound();
+    } else {
+      console.log("TRY AGAIN " + getActivePlayer().name);
+    }
   };
 
   printRound();
