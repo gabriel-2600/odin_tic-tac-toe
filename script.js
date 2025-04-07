@@ -12,7 +12,7 @@ function Gameboard() {
 
   const getBoard = () => board;
 
-  const putPlayerValue = (row, col, playerName, playerValue, playerSymbol) => {
+  const putPlayerValue = (row, col, playerValue, playerSymbol) => {
     if (board[row][col].getValue() === 0) {
       board[row][col].setValue(playerValue);
       board[row][col].setSymbol(playerSymbol);
@@ -100,10 +100,8 @@ function GameController(
     }
   }
 
-  const getActivePlayer = () => activePlayer;
-
   const displayBoard = () => {
-    displayAnnouncement(`${getActivePlayer().name}'s current round...`);
+    displayAnnouncement(`${activePlayer.name}'s current round...`);
     board.updateGameboard();
   };
 
@@ -155,9 +153,8 @@ function GameController(
       board.putPlayerValue(
         row,
         col,
-        getActivePlayer().name,
-        getActivePlayer().value,
-        getActivePlayer().symbol
+        activePlayer.value,
+        activePlayer.symbol
       ) === "SUCCESS"
     ) {
       roundCounter++;
@@ -165,7 +162,7 @@ function GameController(
       if (winnerChecker() === "WINNER") {
         displayBoard();
 
-        displayAnnouncement(`${getActivePlayer().name} Wins!`);
+        displayAnnouncement(`${activePlayer.name} Wins!`);
         return;
       }
 
@@ -187,7 +184,6 @@ function GameController(
 
   return {
     playRound,
-    getActivePlayer,
   };
 }
 
