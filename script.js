@@ -158,7 +158,7 @@ function GameController(
       ) === "SUCCESS"
     ) {
       roundCounter++;
-      console.log(roundCounter);
+
       if (winnerChecker() === "WINNER") {
         displayBoard();
 
