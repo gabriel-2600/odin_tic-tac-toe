@@ -175,4 +175,23 @@ function GameController(
   };
 }
 
+function DisplayGameboard() {
+  const boardContainer = document.querySelector(".board-container");
+  const board = Gameboard();
+
+  for (let i = 0; i < board.getBoard().length; i++) {
+    let startVal = i + 1;
+    for (let j = 0; j < board.getBoard()[i].length; j++) {
+      const div = document.createElement("div");
+      div.classList.add("cell");
+      div.dataset.row = i;
+      div.dataset.col = j;
+
+      boardContainer.appendChild(div);
+      div.style.gridArea = `${startVal} / ${startVal} span 1 / span 1`;
+    }
+  }
+}
+
 const game = GameController();
+DisplayGameboard();
