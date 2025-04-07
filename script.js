@@ -27,6 +27,7 @@ function Gameboard() {
 
   const updateGameboard = () => {
     const boardContainer = document.querySelector(".board-container");
+
     boardContainer.textContent = "";
 
     for (let i = 0; i < board.length; i++) {
@@ -106,6 +107,7 @@ function GameController(
   const getActivePlayer = () => activePlayer;
 
   const displayBoard = () => {
+    displayAnnouncement(`${getActivePlayer().name}'s current round...`);
     board.updateGameboard();
   };
 
@@ -156,8 +158,6 @@ function GameController(
     roundCounter++;
     console.log(roundCounter);
 
-    console.log(`${getActivePlayer().name}'s current round...`);
-
     if (
       board.putPlayerValue(
         row,
@@ -168,20 +168,20 @@ function GameController(
       ) === "SUCCESS"
     ) {
       if (winnerChecker() === "WINNER") {
-        console.log(`${getActivePlayer().symbol} is the winner!`);
         displayBoard();
+
+        displayAnnouncement(`${getActivePlayer().name} Wins!`);
         return;
       }
 
       if (roundCounter === 9) {
-        console.log("TIE");
         displayBoard();
+        displayAnnouncement("TIE");
         return;
       }
 
       switchActivePlayer();
       displayBoard();
-      console.log(`${getActivePlayer().name}'s turn`);
     } else {
       console.log("TRY AGAIN " + getActivePlayer().name);
     }
@@ -193,6 +193,13 @@ function GameController(
     playRound,
     getActivePlayer,
   };
+}
+
+const announcement = document.querySelector(".announcement");
+const headerTwo = document.createElement("h2");
+announcement.appendChild(headerTwo);
+function displayAnnouncement(headerValue) {
+  headerTwo.textContent = headerValue;
 }
 
 const game = GameController();
