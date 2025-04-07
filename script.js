@@ -15,6 +15,7 @@ function Gameboard() {
   const putPlayerValue = (row, col, playerName, playerValue, playerSymbol) => {
     if (board[row][col].getValue() === 0) {
       board[row][col].setValue(playerValue);
+      board[row][col].setSymbol(playerSymbol);
 
       return "SUCCESS";
     } else {
@@ -24,24 +25,35 @@ function Gameboard() {
     }
   };
 
-  const printBoard = () => {
-    const boardWithCells = board.map((row) => {
-      return row.map((cell) => {
-        return cell.getValue();
-      });
-    });
-    console.log(boardWithCells);
+  const updateGameboard = () => {
+    const boardContainer = document.querySelector(".board-container");
+    boardContainer.textContent = "";
+
+    for (let i = 0; i < board.length; i++) {
+      let startVal = i + 1;
+      for (let j = 0; j < board[i].length; j++) {
+        const div = document.createElement("div");
+        div.classList.add("cell");
+        div.dataset.row = i;
+        div.dataset.col = j;
+
+        boardContainer.appendChild(div);
+        div.style.gridArea = `${startVal} / ${startVal} span 1 / span 1`;
+        div.textContent = board[i][j].getSymbol();
+      }
+    }
   };
 
   return {
     getBoard,
     putPlayerValue,
-    printBoard,
+    updateGameboard,
   };
 }
 
 function Cell() {
   let value = 0;
+  let symbol = "";
 
   const setValue = (playerValue) => {
     value = playerValue;
@@ -49,9 +61,17 @@ function Cell() {
 
   const getValue = () => value;
 
+  const setSymbol = (playerSymbol) => {
+    symbol = playerSymbol;
+  };
+
+  const getSymbol = () => symbol;
+
   return {
     setValue,
     getValue,
+    setSymbol,
+    getSymbol,
   };
 }
 
@@ -85,8 +105,8 @@ function GameController(
 
   const getActivePlayer = () => activePlayer;
 
-  const printRound = () => {
-    board.printBoard();
+  const displayBoard = () => {
+    board.updateGameboard();
   };
 
   const winnerChecker = () => {
@@ -149,25 +169,25 @@ function GameController(
     ) {
       if (winnerChecker() === "WINNER") {
         console.log(`${getActivePlayer().symbol} is the winner!`);
-        printRound();
+        displayBoard();
         return;
       }
 
       if (roundCounter === 9) {
         console.log("TIE");
-        printRound();
+        displayBoard();
         return;
       }
 
       switchActivePlayer();
-      printRound();
+      displayBoard();
       console.log(`${getActivePlayer().name}'s turn`);
     } else {
       console.log("TRY AGAIN " + getActivePlayer().name);
     }
   };
 
-  printRound();
+  displayBoard();
 
   return {
     playRound,
@@ -175,23 +195,4 @@ function GameController(
   };
 }
 
-function DisplayGameboard() {
-  const boardContainer = document.querySelector(".board-container");
-  const board = Gameboard();
-
-  for (let i = 0; i < board.getBoard().length; i++) {
-    let startVal = i + 1;
-    for (let j = 0; j < board.getBoard()[i].length; j++) {
-      const div = document.createElement("div");
-      div.classList.add("cell");
-      div.dataset.row = i;
-      div.dataset.col = j;
-
-      boardContainer.appendChild(div);
-      div.style.gridArea = `${startVal} / ${startVal} span 1 / span 1`;
-    }
-  }
-}
-
 const game = GameController();
-DisplayGameboard();
