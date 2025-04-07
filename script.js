@@ -18,10 +18,6 @@ function Gameboard() {
       board[row][col].setSymbol(playerSymbol);
 
       return "SUCCESS";
-    } else {
-      console.log("PLEASE CHOOSE ANOTHER ROW AND COL");
-
-      return "FAIL";
     }
   };
 
@@ -155,9 +151,6 @@ function GameController(
 
   let roundCounter = 0;
   const playRound = (row, col) => {
-    roundCounter++;
-    console.log(roundCounter);
-
     if (
       board.putPlayerValue(
         row,
@@ -167,6 +160,8 @@ function GameController(
         getActivePlayer().symbol
       ) === "SUCCESS"
     ) {
+      roundCounter++;
+      console.log(roundCounter);
       if (winnerChecker() === "WINNER") {
         displayBoard();
 
@@ -176,18 +171,19 @@ function GameController(
 
       if (roundCounter === 9) {
         displayBoard();
+
         displayAnnouncement("TIE");
         return;
       }
 
       switchActivePlayer();
       displayBoard();
-    } else {
-      console.log("TRY AGAIN " + getActivePlayer().name);
+      eventListener();
     }
   };
 
   displayBoard();
+  eventListener();
 
   return {
     playRound,
@@ -203,3 +199,15 @@ function displayAnnouncement(headerValue) {
 }
 
 const game = GameController();
+
+function eventListener() {
+  const cellDiv = document.querySelectorAll(".cell");
+  cellDiv.forEach((cell) => {
+    cell.addEventListener("click", () => {
+      const row = Number(cell.dataset.row);
+      const col = Number(cell.dataset.col);
+
+      game.playRound(row, col);
+    });
+  });
+}
