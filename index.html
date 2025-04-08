@@ -18,6 +18,7 @@
             id="player-one"
             name="player-two"
             placeholder="Player One"
+            required
           />
         </div>
 
@@ -28,10 +29,12 @@
             id="player-two"
             name="player-two"
             placeholder="Player Two"
+            required
           />
         </div>
 
-        <button type="button">Start Game</button>
+        <button type="submit" class="start-game-btn">Start Game</button>
+        <button type="button" class="play-as-guest-btn">Play as Guest</button>
       </form>
     </dialog>
 
@@ -44,8 +47,8 @@
     <div class="board-container"></div>
 
     <div class="button-container">
-      <button>New Game</button>
-      <button>Reset</button>
+      <button class="new-game-btn" type="button">New Game</button>
+      <button class="reset=btn" type="button">Reset</button>
     </div>
 
     <script src="script.js"></script>

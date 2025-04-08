@@ -175,12 +175,24 @@ function GameController(
 
       switchActivePlayer();
       displayBoard();
-      eventListener();
+      cellClickToPlayRound();
     }
   };
 
+  function cellClickToPlayRound() {
+    const cellDiv = document.querySelectorAll(".cell");
+    cellDiv.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        const row = Number(cell.dataset.row);
+        const col = Number(cell.dataset.col);
+
+        playRound(row, col);
+      });
+    });
+  }
+
   displayBoard();
-  eventListener();
+  cellClickToPlayRound();
 
   return {
     playRound,
@@ -194,16 +206,31 @@ function displayAnnouncement(headerValue) {
   headerTwo.textContent = headerValue;
 }
 
-const game = GameController();
+function EventListeners() {
+  const dialog = document.querySelector("dialog");
+  document.addEventListener("DOMContentLoaded", () => {
+    dialog.showModal();
 
-function eventListener() {
-  const cellDiv = document.querySelectorAll(".cell");
-  cellDiv.forEach((cell) => {
-    cell.addEventListener("click", () => {
-      const row = Number(cell.dataset.row);
-      const col = Number(cell.dataset.col);
+    if (dialog.open) {
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-      game.playRound(row, col);
-    });
+        const playeOneName = document.querySelector("#player-one").value;
+        const playerTwoName = document.querySelector("#player-two").value;
+
+        console.log(playeOneName + ", " + playerTwoName);
+        GameController(playeOneName, playerTwoName);
+        dialog.close();
+      });
+
+      const playAsGuestBtn = document.querySelector(".play-as-guest-btn");
+      playAsGuestBtn.addEventListener("click", () => {
+        GameController();
+        dialog.close();
+      });
+    }
   });
 }
+
+EventListeners();
