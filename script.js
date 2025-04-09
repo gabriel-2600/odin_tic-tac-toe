@@ -64,11 +64,17 @@ function Cell() {
 
   const getSymbol = () => symbol;
 
+  const resetAllValues = () => {
+    value = 0;
+    symbol = "";
+  };
+
   return {
     setValue,
     getValue,
     setSymbol,
     getSymbol,
+    resetAllValues,
   };
 }
 
@@ -90,6 +96,11 @@ function GameController(
       value: -1,
     },
   ];
+
+  function getPlayerNames() {
+    const playerNames = [players[0].name, players[1].name];
+    return playerNames;
+  }
 
   let activePlayer = players[0];
   function switchActivePlayer() {
@@ -196,6 +207,7 @@ function GameController(
 
   return {
     playRound,
+    getPlayerNames,
   };
 }
 
@@ -207,6 +219,9 @@ function displayAnnouncement(headerValue) {
 }
 
 function EventListeners() {
+  let playeOneName;
+  let playerTwoName;
+
   const dialog = document.querySelector("dialog");
   dialog.showModal();
 
@@ -227,12 +242,23 @@ function EventListeners() {
 
   const newGameBtn = document.querySelector(".new-game-btn");
   newGameBtn.addEventListener("click", () => {
+    playeOneName = "";
+    playerTwoName = "";
     dialog.showModal();
   });
 
+  const resetBtn = document.querySelector(".reset-btn");
+  resetBtn.addEventListener("click", () => {
+    if (playeOneName === "" && playerTwoName === "") {
+      GameController();
+    } else {
+      GameController(playeOneName, playerTwoName);
+    }
+  });
+
   function startGame() {
-    const playeOneName = document.querySelector("#player-one").value;
-    const playerTwoName = document.querySelector("#player-two").value;
+    playeOneName = document.querySelector("#player-one").value;
+    playerTwoName = document.querySelector("#player-two").value;
 
     console.log(playeOneName + ", " + playerTwoName);
     GameController(playeOneName, playerTwoName);
