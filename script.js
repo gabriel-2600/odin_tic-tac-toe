@@ -208,29 +208,37 @@ function displayAnnouncement(headerValue) {
 
 function EventListeners() {
   const dialog = document.querySelector("dialog");
-  document.addEventListener("DOMContentLoaded", () => {
+  dialog.showModal();
+
+  if (dialog.open) {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      startGame();
+    });
+
+    const playAsGuestBtn = document.querySelector(".play-as-guest-btn");
+    playAsGuestBtn.addEventListener("click", () => {
+      GameController();
+      dialog.close();
+    });
+  }
+
+  const newGameBtn = document.querySelector(".new-game-btn");
+  newGameBtn.addEventListener("click", () => {
     dialog.showModal();
-
-    if (dialog.open) {
-      const form = document.querySelector("form");
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const playeOneName = document.querySelector("#player-one").value;
-        const playerTwoName = document.querySelector("#player-two").value;
-
-        console.log(playeOneName + ", " + playerTwoName);
-        GameController(playeOneName, playerTwoName);
-        dialog.close();
-      });
-
-      const playAsGuestBtn = document.querySelector(".play-as-guest-btn");
-      playAsGuestBtn.addEventListener("click", () => {
-        GameController();
-        dialog.close();
-      });
-    }
   });
+
+  function startGame() {
+    const playeOneName = document.querySelector("#player-one").value;
+    const playerTwoName = document.querySelector("#player-two").value;
+
+    console.log(playeOneName + ", " + playerTwoName);
+    GameController(playeOneName, playerTwoName);
+
+    dialog.close();
+  }
 }
 
 EventListeners();
