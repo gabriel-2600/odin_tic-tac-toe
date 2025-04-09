@@ -260,7 +260,6 @@ function EventListeners() {
     playeOneName = document.querySelector("#player-one").value;
     playerTwoName = document.querySelector("#player-two").value;
 
-    console.log(playeOneName + ", " + playerTwoName);
     GameController(playeOneName, playerTwoName);
 
     dialog.close();

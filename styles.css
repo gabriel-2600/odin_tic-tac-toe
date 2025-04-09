@@ -1,3 +1,6 @@
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
 /* CSS Reset */
 *,
 *::before,
@@ -7,6 +10,9 @@
 
 * {
   margin: 0;
+
+  font-family: "Comic Neue", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
 }
 
 body {
@@ -19,6 +25,46 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+/* CSS Variables */
+:root {
+  --light: #fff2f2;
+  --light-indigo: #a9b5df;
+  --darker-indigo: #7886c7;
+  --darkest-indigo: #2d336b;
+  --black: #000000;
+}
+
+/* Main Container */
+.main-container {
+  background-color: var(--light-indigo);
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Header One */
+.header-one {
+  padding: 10px 0;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 4rem;
+  color: var(--darkest-indigo);
+}
+
+/* Announcement */
+.announcement {
+  padding-bottom: 20px;
+}
+
+h2 {
+  font-size: 2.5rem;
 }
 
 /* Board Container */
@@ -83,4 +129,35 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.4s;
+}
+
+.cell:hover {
+  background-color: var(--darker-indigo);
+  transition: 0.4s;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  padding-top: 40px;
+  gap: 80px;
+}
+.button-container button {
+  border: 0;
+  padding: 10px;
+  width: 150px;
+  font-size: 1.5rem;
+  background-color: var(--light);
+  color: var(--darkest-indigo);
+  border-radius: 8px;
+  transition: 0.4s;
+}
+
+.button-container button:hover {
+  cursor: pointer;
+  background-color: var(--darkest-indigo);
+  color: var(--light);
+
+  transition: 0.4s;
 }
