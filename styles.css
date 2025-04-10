@@ -91,16 +91,49 @@ form button:hover {
 /* Main Container */
 .main-container {
   background-color: var(--light-indigo);
+  min-height: 100vh;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+}
+
+/* Button Container */
+.button-container {
   display: flex;
   flex-direction: column;
-
   align-items: center;
-  min-height: 100vh;
+  justify-content: center;
+  gap: 40px;
+  margin-top: -50px;
+}
+
+.button-container button {
+  border: 0;
+  padding: 10px;
+  width: 150px;
+  font-size: 1.5rem;
+  background-color: var(--light);
+  color: var(--darkest-indigo);
+  border-radius: 8px;
+  transition: 0.4s;
+}
+
+.button-container button:hover {
+  cursor: pointer;
+  background-color: var(--darkest-indigo);
+  color: var(--light);
+  transition: 0.4s;
+}
+
+/* Content Container */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Header One */
 .header-one {
-  padding: 10px 0;
   width: 100%;
 }
 
@@ -186,30 +219,5 @@ h2 {
 
 .cell:hover {
   background-color: var(--darker-indigo);
-  transition: 0.4s;
-}
-
-/* Button Container */
-.button-container {
-  display: flex;
-  padding-top: 40px;
-  gap: 80px;
-}
-.button-container button {
-  border: 0;
-  padding: 10px;
-  width: 150px;
-  font-size: 1.5rem;
-  background-color: var(--light);
-  color: var(--darkest-indigo);
-  border-radius: 8px;
-  transition: 0.4s;
-}
-
-.button-container button:hover {
-  cursor: pointer;
-  background-color: var(--darkest-indigo);
-  color: var(--light);
-
   transition: 0.4s;
 }
