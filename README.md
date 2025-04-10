@@ -17,7 +17,7 @@ Tools used:
 - Github
 
 Lessons Learned:
+Learned and implemented the following:
 
--
-
-Credits (The images/icons used are owned by there rightful authors):
+- Module Pattern for encapsulation and code organization.
+- Factory Functions to create objects with specific behaviors and closures to maintain access to the private variables.
