@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 
-Dynamic Library Website made for the [Project: Tic Tac Toe of The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe)
+Tic-Tac-Toe Website made for the [Project: Tic Tac Toe of The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe)
 
 Live Preview: https://gabriel-2600.github.io/odin_tic-tac-toe/
 
