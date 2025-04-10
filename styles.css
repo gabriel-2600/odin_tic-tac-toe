@@ -39,7 +39,6 @@ select {
 /* Dialog */
 dialog {
   background-color: var(--darker-indigo);
-  border: 1px solid var(--wood);
   border-radius: 20px;
   padding: 40px;
 

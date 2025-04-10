@@ -64,17 +64,11 @@ function Cell() {
 
   const getSymbol = () => symbol;
 
-  const resetAllValues = () => {
-    value = 0;
-    symbol = "";
-  };
-
   return {
     setValue,
     getValue,
     setSymbol,
     getSymbol,
-    resetAllValues,
   };
 }
 
