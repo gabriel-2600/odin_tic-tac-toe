@@ -97,11 +97,6 @@ function GameController(
     },
   ];
 
-  function getPlayerNames() {
-    const playerNames = [players[0].name, players[1].name];
-    return playerNames;
-  }
-
   let activePlayer = players[0];
   function switchActivePlayer() {
     if (activePlayer === players[0]) {
@@ -207,7 +202,6 @@ function GameController(
 
   return {
     playRound,
-    getPlayerNames,
   };
 }
 
